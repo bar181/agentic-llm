@@ -213,3 +213,12 @@ Our development plan spans 4 to 6 months with key milestones at each month:
 ## Conclusion
 
 Our modular, self-learning, agent-based AI system represents a significant advancement in artificial intelligence. By overcoming the limitations of traditional LLMs and introducing a flexible, scalable, and efficient architecture, we are poised to redefine what's possible in AI technology.
+
+## Contact Information
+
+For more information, please contact:
+
+- **Project Lead:** John Doe
+- **Email:** john.doe@example.com
+- **Phone:** +1 (555) 123-4567
+- **Address:** 123 AI Innovation Drive, Tech City, TX 75001, USA
