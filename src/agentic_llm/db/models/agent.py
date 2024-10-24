@@ -46,3 +46,21 @@ class Agent(Base):
     
     def __repr__(self):
         return f"<Agent {self.name} ({self.type.value})>"
+        
+    def transition_status(self, new_status: AgentStatus) -> bool:
+        """
+        Safely transition agent status with validation
+        Returns True if transition was successful
+        """
+        valid_transitions = {
+            AgentStatus.IDLE: [AgentStatus.ACTIVE, AgentStatus.LEARNING],
+            AgentStatus.ACTIVE: [AgentStatus.IDLE, AgentStatus.SUSPENDED, AgentStatus.ERROR],
+            AgentStatus.LEARNING: [AgentStatus.IDLE, AgentStatus.ERROR],
+            AgentStatus.SUSPENDED: [AgentStatus.IDLE, AgentStatus.ERROR],
+            AgentStatus.ERROR: [AgentStatus.IDLE]
+        }
+        
+        if new_status in valid_transitions.get(self.status, []):
+            self.status = new_status
+            return True
+        return False

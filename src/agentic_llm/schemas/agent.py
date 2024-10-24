@@ -25,6 +25,21 @@ class AgentBase(BaseModel):
     capabilities: List[str] = Field(default_factory=list, description="List of agent capabilities")
     config: Dict = Field(default_factory=dict, description="Agent configuration parameters")
 
+    @validator('capabilities')
+    def validate_capabilities(cls, v):
+        """Validate agent capabilities"""
+        known_capabilities = {
+            "text_processing",
+            "image_analysis", 
+            "data_analysis",
+            "task_planning",
+            "learning"
+        }
+        unknown = set(v) - known_capabilities
+        if unknown:
+            raise ValueError(f"Unknown capabilities: {unknown}")
+        return v
+
 class AgentCreate(AgentBase):
     """Schema for creating a new agent"""
     pass

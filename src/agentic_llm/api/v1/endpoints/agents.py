@@ -89,3 +89,28 @@ def delete_agent(agent_id: int, db: Session = Depends(get_db)):
         db.rollback()
         raise HTTPException(status_code=400, detail=str(e))
     return {"message": "Agent deleted successfully"}
+
+@router.post("/{agent_id}/status", response_model=AgentResponse)
+def update_agent_status(
+    agent_id: int,
+    new_status: AgentStatus,
+    db: Session = Depends(get_db)
+):
+    """Update agent status with validation"""
+    db_agent = db.query(Agent).filter(Agent.id == agent_id).first()
+    if db_agent is None:
+        raise HTTPException(status_code=404, detail="Agent not found")
+        
+    if not db_agent.transition_status(new_status):
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Invalid status transition from {db_agent.status} to {new_status}"
+        )
+    
+    try:
+        db.commit()
+        db.refresh(db_agent)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+    return db_agent
