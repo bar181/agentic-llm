@@ -8,6 +8,10 @@ version = "0.1.0"
 description = "A modular, self-learning, agent-based AI system using FastAPI, SQLAlchemy, Pydantic, and asyncio."
 authors = ["John Doe <john.doe@example.com>"]
 readme = "README.md"
+packages = [
+    { include = "agentic_llm", from = "src" },
+]
+package-mode = true
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
