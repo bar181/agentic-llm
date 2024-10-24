@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "agentic-llm"
-authors = ["brad"]]
+authors = ["brad"]
 version = "0.1.0"
 description = "A modular, self-learning, agent-based AI system using FastAPI, SQLAlchemy, Pydantic, and asyncio."
 
