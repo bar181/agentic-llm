@@ -39,6 +39,15 @@ from agentic_llm.db.base import Base, engine
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan events handler"""
+    # Startup
+    logger.info("Starting Agentic LLM API")
+    yield
+    # Shutdown
+    logger.info("Shutting down Agentic LLM API")
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
@@ -56,15 +65,6 @@ app.add_middleware(
 
 # Include API router
 app.include_router(api_router, prefix=settings.API_V1_STR)
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Lifespan events handler"""
-    # Startup
-    logger.info("Starting Agentic LLM API")
-    yield
-    # Shutdown
-    logger.info("Shutting down Agentic LLM API")
 
 @app.get("/")
 async def root():
