@@ -1,8 +1,34 @@
 """
 Main application entry point for Agentic LLM.
 """
+import logging
 import uvicorn
 from fastapi import FastAPI
+from logging.config import dictConfig
+
+# Configure logging
+dictConfig({
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+            "level": "INFO"
+        }
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO"
+    }
+})
+
+logger = logging.getLogger(__name__)
 from fastapi.middleware.cors import CORSMiddleware
 
 from agentic_llm.core.config import settings
@@ -28,6 +54,18 @@ app.add_middleware(
 
 # Include API router
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
+@app.on_event("startup")
+async def startup_event():
+    """Startup tasks"""
+    logger.info("Starting Agentic LLM API")
+    # Add any additional startup tasks here
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Shutdown tasks"""
+    logger.info("Shutting down Agentic LLM API")
+    # Add any cleanup tasks here
 
 @app.get("/")
 async def root():
