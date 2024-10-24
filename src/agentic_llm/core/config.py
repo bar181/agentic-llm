@@ -1,7 +1,7 @@
 """
 Configuration settings for the Agentic LLM application.
 """
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 from typing import Optional, Dict, Any
 import os
 
