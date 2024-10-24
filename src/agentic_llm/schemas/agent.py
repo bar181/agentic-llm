@@ -66,7 +66,7 @@ class AgentInDB(AgentBase):
     learning_state: Dict
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class AgentResponse(AgentInDB):
     """Schema for agent responses to API requests"""

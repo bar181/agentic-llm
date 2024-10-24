@@ -3,6 +3,7 @@ Main application entry point for Agentic LLM.
 """
 import logging
 import uvicorn
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from logging.config import dictConfig
 
@@ -40,7 +41,8 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    lifespan=lifespan
 )
 
 # Configure CORS
@@ -55,17 +57,14 @@ app.add_middleware(
 # Include API router
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
-@app.on_event("startup")
-async def startup_event():
-    """Startup tasks"""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan events handler"""
+    # Startup
     logger.info("Starting Agentic LLM API")
-    # Add any additional startup tasks here
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Shutdown tasks"""
+    yield
+    # Shutdown
     logger.info("Shutting down Agentic LLM API")
-    # Add any cleanup tasks here
 
 @app.get("/")
 async def root():
