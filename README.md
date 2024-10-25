@@ -1,4 +1,5 @@
 # Summary
+## Bradley Ross https://www.linkedin.com/in/bradaross/
 
 ## Next-Generation AI System: Modular, Self-Learning, Agent-Based Architecture
 
@@ -218,7 +219,5 @@ Our modular, self-learning, agent-based AI system represents a significant advan
 
 For more information, please contact:
 
-- **Project Lead:** John Doe
-- **Email:** john.doe@example.com
-- **Phone:** +1 (555) 123-4567
-- **Address:** 123 AI Innovation Drive, Tech City, TX 75001, USA
+- Bradley Ross
+- https://www.linkedin.com/in/bradaross/
